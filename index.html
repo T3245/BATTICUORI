@@ -42,7 +42,7 @@
             font-weight: bold;
         }
 
-        /* NUOVO PANNELLO RADIO VINTAGE */
+        /* PANNELLO RADIO VINTAGE */
         .radio-player-panel {
             background-color: #333;
             color: #00ff00;
@@ -208,7 +208,7 @@
         <div class="window-controls"><span>X</span></div>
     </div>
 
-    <!-- LETTORE RADIO INTEGRATO -->
+    <!-- LETTORE RADIO INTEGRATO CORRETTO -->
     <div class="radio-player-panel">
         <div class="radio-info">
             <span>📻 RADIO RUBACUORI:</span>
@@ -223,8 +223,8 @@
         </div>
     </div>
 
-    <!-- Elemento Audio Nascosto -->
-    <audio id="audioStream" src="https://icecast.unitedradio.it/Radio105.mp3"></audio>
+    <!-- Elemento Audio Nascosto con Canale Dance Libero da Blocchi -->
+    <audio id="audioStream" src="https://stream.syntheticfm.thehost.click/stream"></audio>
 
     <div class="chat-menu">
         <span class="menu-item active-room">🏠 Stanza Principale</span>
@@ -317,7 +317,7 @@
         audioStream.play().then(() => {
             radioStatus.textContent = "LIVE";
             radioStatus.style.color = "#00ff00";
-            trackName.textContent = "Streaming Dance & Pop Prova 🎧";
+            trackName.textContent = "Streaming Dance Live 🎧";
             appendMessage("SYSTEM", "Hai acceso Radio Rubacuori! Alza il volume! 🎵🔊", "#ff0000", true);
         }).catch(err => {
             trackName.textContent = "Errore nel caricamento del flusso.";
