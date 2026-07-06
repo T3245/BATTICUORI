@@ -1,1 +1,261 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>123FlashChat - Chat Rubacuori ❤️</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: Tahoma, Arial, sans-serif; }
+        body { background-color: #a53a5c; padding: 20px; display: flex; justify-content: center; align-items: center; min-height: 100vh; }
+        
+        /* Finestra Software Vintage */
+        .flashchat-window {
+            width: 850px;
+            height: 550px;
+            background-color: #ece9d8;
+            border: 3px solid #bd0042;
+            border-top-left-radius: 5px;
+            border-top-right-radius: 5px;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 5px 5px 20px rgba(0,0,0,0.4);
+        }
 
+        /* Barra del Titolo */
+        .chat-titlebar {
+            background: linear-gradient(to bottom, #e6005c 0%, #bd0042 100%);
+            color: white;
+            padding: 6px 10px;
+            font-weight: bold;
+            font-size: 13px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .window-controls span {
+            background-color: #e64b23;
+            padding: 1px 6px;
+            border: 1px solid white;
+            font-size: 11px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        /* Menu Stanze */
+        .chat-menu {
+            background-color: #f1efe2;
+            border-bottom: 1px solid #b5b2a1;
+            padding: 5px;
+            display: flex;
+            gap: 10px;
+            font-size: 12px;
+        }
+        .menu-item { padding: 2px 6px; cursor: pointer; border: 1px solid transparent; }
+        .menu-item:hover { background-color: #e2dfd1; border: 1px solid #b5b2a1; }
+        .active-room { font-weight: bold; color: #bd0042; }
+
+        /* Area Principale */
+        .chat-main-area {
+            display: flex;
+            flex: 1;
+            overflow: hidden;
+            padding: 5px;
+            gap: 5px;
+        }
+
+        /* Schermo Messaggi */
+        .chat-screen-container {
+            flex: 3;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+        .chat-screen {
+            flex: 1;
+            background-color: white;
+            border: 2px inset #fff;
+            box-shadow: inset 1px 1px 3px #888;
+            padding: 10px;
+            overflow-y: auto;
+            font-size: 13px;
+        }
+
+        /* Lista Utenti */
+        .chat-users-list {
+            flex: 1;
+            background-color: white;
+            border: 2px inset #fff;
+            box-shadow: inset 1px 1px 3px #888;
+            display: flex;
+            flex-direction: column;
+            font-size: 12px;
+        }
+        .users-header {
+            background-color: #f7cbd7;
+            padding: 4px;
+            font-weight: bold;
+            color: #333;
+            border-bottom: 1px solid #999;
+            text-align: center;
+        }
+        .users-scroll { flex: 1; overflow-y: auto; padding: 5px; }
+        .user-item { padding: 3px; display: flex; align-items: center; gap: 5px; cursor: pointer; }
+        .user-item:hover { background-color: #bd0042; color: white; }
+        .user-icon { width: 12px; height: 12px; background-color: #00ff00; border-radius: 5px; display: inline-block; }
+        .icon-dj { background-color: #ff00ff; }
+
+        /* Barra Strumenti */
+        .chat-toolbar {
+            background-color: #f1efe2;
+            padding: 5px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border-top: 1px solid #b5b2a1;
+            font-size: 12px;
+        }
+        .toolbar-btn { cursor: pointer; padding: 2px 4px; border: 1px solid #999; background: #fff; }
+        .toolbar-btn:hover { background: #e2dfd1; }
+
+        /* Input e Invio */
+        .chat-input-bar {
+            background-color: #e1dfd0;
+            padding: 8px;
+            display: flex;
+            gap: 5px;
+            border-top: 1px solid #b5b2a1;
+        }
+        .chat-input-bar input {
+            flex: 1;
+            padding: 5px;
+            border: 2px inset #fff;
+            font-size: 13px;
+        }
+        .send-button {
+            padding: 4px 15px;
+            background-color: #f0eedf;
+            border: 2px solid #7f9db9;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 12px;
+            color: #333;
+        }
+        .send-button:active { border-style: inset; }
+
+        /* Messaggi */
+        .msg-line { margin-bottom: 6px; line-height: 1.3; }
+        .msg-time { color: #888; font-size: 11px; margin-right: 5px; }
+        .msg-author { font-weight: bold; margin-right: 5px; }
+        .msg-text { color: #000; }
+        .system-msg { color: #ff0000; font-style: italic; }
+    </style>
+</head>
+<body>
+
+<div class="flashchat-window">
+    <div class="chat-titlebar">
+        <span>🌐 123FlashChat - Chat Rubacuori v6.0 ❤️</span>
+        <div class="window-controls"><span>X</span></div>
+    </div>
+
+    <div class="chat-menu">
+        <span class="menu-item active-room">🏠 Stanza Principale</span>
+        <span class="menu-item">🎵 Richieste Radio</span>
+        <span class="menu-item">💖 Dediche</span>
+    </div>
+
+    <div class="chat-main-area">
+        <div class="chat-screen-container">
+            <div class="chat-screen" id="chatScreen">
+                <div class="msg-line">
+                    <span class="msg-time">[SYSTEM]</span>
+                    <span class="system-msg">Benvenuto su Chat Rubacuori! Preparati a sintonizzarti!</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="chat-users-list">
+            <div class="users-header">Utenti Online (<span id="userCount">1</span>)</div>
+            <div class="users-scroll" id="usersScroll">
+                <div class="user-item"><span class="user-icon icon-dj"></span><strong>👑 DJ_Tigrotta</strong></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="chat-toolbar">
+        <label>Colore Testo:</label>
+        <select id="textColor">
+            <option value="#000000">Nero</option>
+            <option value="#ff0000">Rosso</option>
+            <option value="#0000ff">Blu</option>
+            <option value="#00aa00">Verde</option>
+            <option value="#ff00ff">Fucsia</option>
+        </select>
+        <span class="toolbar-btn">😊 Emoticons</span>
+        <span class="toolbar-btn">🔊 Suoni ON</span>
+    </div>
+
+    <div class="chat-input-bar">
+        <input type="text" id="messageInput" placeholder="Digita qui il tuo messaggio..." maxlength="250">
+        <button class="send-button" id="sendBtn">Invia</button>
+    </div>
+</div>
+
+<script>
+    let myNickname = prompt("Inserisci il tuo Nickname per entrare in Chat Rubacuori:", "Guest_" + Math.floor(Math.random() * 1000));
+    if(!myNickname || myNickname.trim() === "") { myNickname = "Anonimo"; }
+
+    const chatScreen = document.getElementById('chatScreen');
+    const messageInput = document.getElementById('messageInput');
+    const sendBtn = document.getElementById('sendBtn');
+    const usersScroll = document.getElementById('usersScroll');
+    const userCount = document.getElementById('userCount');
+    const textColorSelect = document.getElementById('textColor');
+
+    const newUserElement = document.createElement('div');
+    newUserElement.className = 'user-item';
+    newUserElement.innerHTML = `<span class="user-icon"></span><span>${myNickname}</span>`;
+    usersScroll.appendChild(newUserElement);
+    userCount.textContent = "2"; 
+
+    function appendMessage(author, text, color, isSystem = false) {
+        const now = new Date();
+        const timeStr = `[${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}]`;
+        
+        const msgLine = document.createElement('div');
+        msgLine.className = 'msg-line';
+        
+        if(isSystem) {
+            msgLine.innerHTML = `<span class="msg-time">${timeStr}</span><span class="system-msg">${text}</span>`;
+        } else {
+            msgLine.innerHTML = `
+                <span class="msg-time">${timeStr}</span>
+                <span class="msg-author" style="color: ${author === '👑 DJ_Tigrotta' ? '#ff00ff' : '#bd0042'}">${author}:</span>
+                <span class="msg-text" style="color: ${color}">${text}</span>
+            `;
+        }
+        
+        chatScreen.appendChild(msgLine);
+        chatScreen.scrollTop = chatScreen.scrollHeight; 
+    }
+
+    function sendMessage() {
+        const text = messageInput.value.trim();
+        if(text === "") return;
+        const selectedColor = textColorSelect.value;
+        appendMessage(myNickname, text, selectedColor);
+        messageInput.value = "";
+    }
+
+    sendBtn.addEventListener('click', sendMessage);
+    messageInput.addEventListener('keypress', function(e) {
+        if(e.key === 'Enter') sendMessage();
+    });
+
+    setTimeout(() => {
+        appendMessage("👑 DJ_Tigrotta", "Benvenuto su Chat Rubacuori! Alza il volume! 🐯❤️", "#ff00ff");
+    }, 1500);
+</script>
+
+</body>
+</html>
