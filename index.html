@@ -11,7 +11,7 @@
         /* Finestra Software Vintage */
         .flashchat-window {
             width: 850px;
-            height: 610px;
+            height: 640px;
             background-color: #ece9d8;
             border: 3px solid #bd0042;
             border-top-left-radius: 5px;
@@ -42,18 +42,21 @@
             font-weight: bold;
         }
 
-        /* PANNELLO LETTORE ANTI-BLOCCO */
+        /* PANNELLO PLAYER BLINDATO (IFRAME ESTERNO) */
         .radio-player-panel {
             background-color: #222;
-            padding: 4px;
+            padding: 2px;
             display: flex;
             justify-content: center;
             align-items: center;
             border-bottom: 2px solid #b5b2a1;
+            height: 65px;
+            overflow: hidden;
         }
-        .radio-player-panel audio {
+        .radio-player-panel iframe {
             width: 100%;
-            height: 32px;
+            height: 60px;
+            border: none;
         }
 
         /* Menu Stanze */
@@ -193,7 +196,7 @@
     </div>
 
     <div class="radio-player-panel">
-        <audio controls id="audioStream" src="https://stream.zeno.fm/f9u3v67v0v8uv"></audio>
+        <iframe src="https://zeno.fm/player/f9u3v67v0v8uv" allow="autoplay; encrypted-media"></iframe>
     </div>
 
     <div class="chat-menu">
@@ -207,7 +210,7 @@
             <div class="chat-screen" id="chatScreen">
                 <div class="msg-line">
                     <span class="msg-time">[SYSTEM]</span>
-                    <span class="system-msg">Benvenuto su Chat Rubacuori! Premi il tasto PLAY sul lettore grigio in alto.</span>
+                    <span class="system-msg">Benvenuto su Chat Rubacuori! Usa il mini-player nero qui sopra per avviare la musica!</span>
                 </div>
             </div>
         </div>
